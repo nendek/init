@@ -1,0 +1,1 @@
+netstat -rn | grep default | grep UGSc | cut -d \t -f 2 | tr -s ' ' | cut -d ' ' -f 2

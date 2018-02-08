@@ -1,0 +1,1 @@
+WEBSITE="slash16.org";IP=`nslookup $WEBSITE 8.8.8.8 | grep -w Address | sed '1d' | sed '2,$d' | cut -d ' ' -f 2`; whois $IP | egrep -i "orgname|org-|organ"
