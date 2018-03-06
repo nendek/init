@@ -1,11 +1,12 @@
 #!/bin/bash
 
 crontab -l > ./test
-if (cat ./test | grep -q "0 0 \* \* \* sudo sh /home/vagrant/init/scripting/04")
+if (cat ./test | grep -q "0 0 \* \* \* sudo sh ./4")
 then 
 	rm test
 else
-	echo "0 0 * * * sudo sh /home/vagrant/init/scripting/04" >> test
+	echo "0 0 * * * sh ./4" >> test
+	cat test
 	crontab test
 	rm ./test
 fi
