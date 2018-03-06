@@ -1,0 +1,11 @@
+#!/bin/sh
+
+crontab -l > ./test
+if (cat ./test | grep -q "0 4 \* \* 0 sudo apt-get -y update && sudo apt-get -y upgrade | sudo tee /var/log/update_script.log")
+then 
+	rm test
+else
+	echo "0 4 * * 0 sudo apt-get -y update && sudo apt-get -y upgrade | sudo tee /var/log/update_script.log" >> test
+	crontab test
+	rm test
+fi

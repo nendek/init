@@ -1,0 +1,24 @@
+#!/bin/bash
+
+crontab -l > ./test
+if (cat ./test | grep -q "0 0 \* \* \* sudo sh /home/vagrant/init/scripting/04")
+then 
+	rm test
+else
+	echo "0 0 * * * sudo sh /home/vagrant/init/scripting/04" >> test
+	crontab test
+	rm ./test
+fi
+
+if [ -e ./old_checksum ] 
+then
+	echo "`sudo md5sum /etc/crontab`" > ./new_crontab
+	if ! ( cmp -s ./old_checksum ./new_crontab) 
+	then
+		echo "Crontab has been modified" | sudo mail root -s "Crontab modified" root
+		md5sum /etc/crontab > ./old_checksum 
+	fi
+	rm ./new_crontab
+else
+	md5sum /etc/crontab > ./old_checksum
+fi
